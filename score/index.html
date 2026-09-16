@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="theme-color" content="#080417">
+    <meta name="description" content="Moonshot SME score registration for standholders">
+    <title>Moonshot SME · Score Station</title>
+    <link rel="icon" type="image/jpeg" href="../assets/moonshot-mark-2026.jpg">
+    <link rel="stylesheet" href="../styles.css">
+  </head>
+  <body>
+    <main class="shell scoreShell">
+      <header class="topbar">
+        <a class="brand brandLink" href="../" aria-label="Moonshot dashboard"><span class="brandMark" aria-hidden="true"><img src="../assets/moonshot-mark-2026.jpg" alt="" width="320" height="320"></span><span>SME MOONSHOT <small>2026</small></span></a>
+        <div class="langSwitch" role="group" aria-label="Language / Taal / Langue">
+          <button type="button" data-lang="en">EN</button>
+          <button type="button" data-lang="nl">NL</button>
+          <button type="button" data-lang="fr">FR</button>
+        </div>
+      </header>
+
+      <section class="hero heroGrid scoreHero">
+        <div class="heroCopy">
+          <p class="eyebrow">SME EVENT · SCORE STATION</p>
+          <h1><span data-i18n="heroLead">Award stars.</span> <span class="gradient" data-i18n="heroAccent">Capture the mission.</span></h1>
+          <p data-i18n="heroIntro">Register a team score and add a photo. The dashboard is ready to refresh immediately.</p>
+        </div>
+        <figure class="eventVisual scoreEventVisual">
+          <img src="../assets/moonshot-event-2026.jpg" alt="SME Moonshot 2026 — Reach beyond. Together." width="1024" height="1024">
+        </figure>
+      </section>
+
+      <section class="scoreCard" aria-labelledby="scoreTitle">
+        <h2 id="scoreTitle" class="srOnly" data-i18n="scoreTitle">Register a score</h2>
+        <form id="scoreForm" novalidate>
+          <div class="scoreFields">
+            <label><span data-i18n="mission">Mission / station</span>
+              <select id="scoreMission" required disabled><option data-i18n="loading">Loading…</option></select>
+            </label>
+            <label><span data-i18n="team">Team</span>
+              <select id="scoreTeam" required disabled><option data-i18n="loading">Loading…</option></select>
+            </label>
+          </div>
+
+          <fieldset class="scoreFieldset">
+            <legend data-i18n="stars">Stars</legend>
+            <div class="scoreStars" id="scoreStars" role="radiogroup" aria-required="true"></div>
+          </fieldset>
+
+          <label class="scoreDrop" id="scoreDrop">
+            <input id="scorePhoto" type="file" accept="image/jpeg,image/png,image/webp,image/heic,image/heif" capture="environment">
+            <span class="scorePhotoPrompt"><strong data-i18n="photo">Add a team photo</strong><small data-i18n="photoHint">Take a photo or choose one · optional · max. 8 MB</small></span>
+            <img class="scorePreview" id="scorePreview" alt="">
+          </label>
+
+          <p class="scoreNote" data-i18n="note">A new entry for the same team and mission becomes the current score on the dashboard.</p>
+          <p class="scoreStatus" id="scoreStatus" role="status" aria-live="polite"></p>
+          <button class="scoreSubmit" id="scoreSubmit" type="submit" disabled data-i18n="submit">Launch score</button>
+        </form>
+      </section>
+
+      <footer class="scoreFooter"><span data-i18n="live">Live connection · Google Sheets</span><a href="../" data-i18n="dashboard">Open team dashboard</a></footer>
+    </main>
+    <script src="../data.js" defer></script>
+    <script src="../scorer.js" defer></script>
+  </body>
+</html>

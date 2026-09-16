@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="theme-color" content="#080417">
+    <meta name="description" content="Live Moonshot SME team progress dashboard">
+    <title>Moonshot SME Team Progress</title>
+    <link rel="icon" type="image/jpeg" href="./assets/moonshot-mark-2026.jpg">
+    <link rel="stylesheet" href="./styles.css">
+  </head>
+  <body>
+    <main class="shell">
+      <header class="topbar">
+        <div class="brand"><span class="brandMark" aria-hidden="true"><img src="./assets/moonshot-mark-2026.jpg" alt="" width="320" height="320"></span><span>SME MOONSHOT <small>2026</small></span></div>
+        <div class="topActions">
+          <div class="live"><span class="dot"></span><span data-i18n="liveStatus">Live data · Google Sheets</span></div>
+          <div class="langSwitch" role="group" aria-label="Language / Taal / Langue">
+            <button type="button" data-lang="en">EN</button>
+            <button type="button" data-lang="nl">NL</button>
+            <button type="button" data-lang="fr">FR</button>
+          </div>
+        </div>
+      </header>
+
+      <section class="hero heroGrid">
+        <div class="heroCopy">
+          <p class="eyebrow">SME EVENT · MISSION CONTROL</p>
+          <h1><span data-i18n="heroLead">Track your</span> <span class="gradient">moonshot.</span></h1>
+          <p data-i18n="heroIntro">See completed missions, earned stars and your team photos in one place.</p>
+        </div>
+        <figure class="eventVisual">
+          <img src="./assets/moonshot-event-2026.jpg" alt="SME Moonshot 2026 — Reach beyond. Together." width="1024" height="1024">
+        </figure>
+      </section>
+
+      <section class="loginCard" aria-labelledby="accessTitle">
+        <h2 id="accessTitle" class="srOnly" data-i18n="teamAccess">Team access</h2>
+        <label><span data-i18n="teamLabel">Team</span>
+          <select id="teamSelect" disabled>
+            <option value="" data-i18n="loadingTeams">Loading teams…</option>
+          </select>
+        </label>
+        <label><span data-i18n="codeLabel">Team code</span>
+          <input id="teamCode" data-i18n-placeholder="codePlaceholder" placeholder="Your unique code" type="password" autocomplete="off" autocapitalize="none" spellcheck="false">
+        </label>
+        <button id="openDashboard" type="button" disabled data-i18n="viewProgress">View progress</button>
+        <p class="error" id="error" role="alert" hidden></p>
+      </section>
+
+      <section id="dashboard" class="dashboard" hidden>
+        <div class="dashHead">
+          <div><p class="eyebrow" data-i18n="dashboardEyebrow">TEAM DASHBOARD</p><h2 id="teamTitle"></h2></div>
+          <div class="dashActions">
+            <span class="dataStatus"><span class="dot"></span><span id="lastUpdated" data-i18n="liveStatus">Live data · Google Sheets</span></span>
+            <button class="refreshButton" id="refreshData" type="button" disabled>
+              <span class="refreshIcon" aria-hidden="true">↻</span><span data-i18n="refresh">Refresh</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="stats">
+          <article class="stat heroStat"><small data-i18n="totalStars">Total stars</small><strong><span id="totalStars">0</span> ★</strong></article>
+          <article class="stat"><small data-i18n="missionsLabel">Missions</small><strong><span id="playedCount">0</span><em>/<span id="missionTotal">0</span></em></strong></article>
+          <article class="stat"><small data-i18n="progressLabel">Progress</small><strong id="progressPct">0%</strong><div class="track"><i id="progressBar" style="width:0%"></i></div></article>
+        </div>
+
+        <div class="sectionTitle"><h3 data-i18n="leaderboard">Leaderboard</h3><span data-i18n="liveRanking">Live ranking</span></div>
+        <ol class="leaderboard" id="leaderboard"></ol>
+
+        <div class="sectionTitle"><h3 data-i18n="missionsLabel">Missions</h3><span id="missionSummary"></span></div>
+        <div class="missionGrid" id="missionGrid"></div>
+
+        <div class="sectionTitle"><h3 data-i18n="teamPhotos">Team photos</h3><span id="photoCount"></span></div>
+        <div class="gallery" id="gallery"></div>
+      </section>
+    </main>
+    <script src="./data.js" defer></script>
+    <script src="./client.js" defer></script>
+  </body>
+</html>
