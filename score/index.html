@@ -20,7 +20,7 @@
         </div>
       </header>
 
-      <section class="hero heroGrid scoreHero">
+      <section class="hero heroGrid scoreHero" id="scoreHero">
         <div class="heroCopy">
           <p class="eyebrow">SME EVENT · SCORE STATION</p>
           <h1><span data-i18n="heroLead">Award stars.</span> <span class="gradient" data-i18n="heroAccent">Capture the mission.</span></h1>
@@ -31,11 +31,35 @@
         </figure>
       </section>
 
-      <section class="scoreCard" aria-labelledby="scoreTitle">
-        <h2 id="scoreTitle" class="srOnly" data-i18n="scoreTitle">Register a score</h2>
-        <form id="scoreForm" novalidate>
+      <section class="standDashboard" id="standDashboard" hidden>
+        <div class="standHead">
+          <div>
+            <p class="eyebrow" data-i18n="standEyebrow">MISSION STATION</p>
+            <h1 id="standMissionTitle"></h1>
+            <p id="standMissionMeta"></p>
+          </div>
+          <div class="standHeadActions">
+            <strong id="standProgress"></strong>
+            <button class="refreshButton" id="standRefresh" type="button"><span class="refreshIcon" aria-hidden="true">↻</span><span data-i18n="refresh">Refresh</span></button>
+          </div>
+        </div>
+      </section>
+
+      <div class="scoreWorkspace">
+        <section class="standSchedule" id="standSchedule" hidden aria-labelledby="standScheduleTitle">
+          <div class="standSectionTitle">
+            <div><p class="eyebrow" data-i18n="scheduleEyebrow">TODAY'S FLIGHT PLAN</p><h2 id="standScheduleTitle" data-i18n="scheduleTitle">Groups visiting this station</h2></div>
+            <span data-i18n="chooseFromTimeline">Select a group to award points</span>
+          </div>
+          <ol class="standTimeline" id="standTimeline"></ol>
+        </section>
+
+        <section class="scoreCard" id="scoreCard" aria-labelledby="scoreTitle">
+          <h2 id="scoreTitle" data-i18n="scoreTitle">Register a score</h2>
+          <p class="scoreCardIntro" id="scoreCardIntro" data-i18n="scoreCardIntro">Choose a mission and team, then award stars.</p>
+          <form id="scoreForm" novalidate>
           <div class="scoreFields">
-            <label><span data-i18n="mission">Mission / station</span>
+            <label id="missionField"><span data-i18n="mission">Mission / station</span>
               <select id="scoreMission" required disabled><option data-i18n="loading">Loading…</option></select>
             </label>
             <label><span data-i18n="team">Team</span>
@@ -57,8 +81,9 @@
           <p class="scoreNote" data-i18n="note">A new entry for the same team and mission becomes the current score on the dashboard.</p>
           <p class="scoreStatus" id="scoreStatus" role="status" aria-live="polite"></p>
           <button class="scoreSubmit" id="scoreSubmit" type="submit" disabled data-i18n="submit">Launch score</button>
-        </form>
-      </section>
+          </form>
+        </section>
+      </div>
 
       <footer class="scoreFooter"><span data-i18n="live">Live connection · Google Sheets</span><a href="../" data-i18n="dashboard">Open team dashboard</a></footer>
     </main>

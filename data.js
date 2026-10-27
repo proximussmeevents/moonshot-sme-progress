@@ -1,4 +1,5 @@
 (() => {
+  const baseUrl = new URL('./', document.currentScript.src);
   const SHEET_ID = '1Gs8KsNr-wRlkGNIOye8-pXZK_lrspB7JLBB-1oUpo6g';
   const SCORE_ENDPOINT = 'https://script.google.com/macros/s/AKfycbzYIZm4sQy1qg5V9YRvPGRl40XdlSmsTE4rjpL874bExaN605na-DfOfr0oVt7iKEMJCA/exec';
   let requestId = 0;
@@ -39,13 +40,14 @@
   }
 
   async function load() {
-    const [teams, missions, responses] = await Promise.all([
+    const [teams, missions, matrix, responses] = await Promise.all([
       readTab('Teams'),
       readTab('Missies'),
+      readTab('Missiematrix'),
       readTab('Formulierreacties 1')
     ]);
-    return { teams, missions, responses, fetchedAt: new Date().toISOString() };
+    return { teams, missions, matrix, responses, fetchedAt: new Date().toISOString() };
   }
 
-  window.MoonshotData = { load, scoreEndpoint: SCORE_ENDPOINT };
+  window.MoonshotData = { load, scoreEndpoint: SCORE_ENDPOINT, baseUrl };
 })();

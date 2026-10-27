@@ -23,7 +23,7 @@
         </div>
       </header>
 
-      <section class="hero heroGrid">
+      <section class="hero heroGrid" id="siteHero">
         <div class="heroCopy">
           <p class="eyebrow">SME EVENT · MISSION CONTROL</p>
           <h1><span data-i18n="heroLead">Track your</span> <span class="gradient">moonshot.</span></h1>
@@ -34,7 +34,7 @@
         </figure>
       </section>
 
-      <section class="loginCard" aria-labelledby="accessTitle">
+      <section class="loginCard" id="teamAccess" aria-labelledby="accessTitle">
         <h2 id="accessTitle" class="srOnly" data-i18n="teamAccess">Team access</h2>
         <label><span data-i18n="teamLabel">Team</span>
           <select id="teamSelect" disabled>
@@ -65,11 +65,11 @@
           <article class="stat"><small data-i18n="progressLabel">Progress</small><strong id="progressPct">0%</strong><div class="track"><i id="progressBar" style="width:0%"></i></div></article>
         </div>
 
+        <div class="sectionTitle timelineTitle"><div><p class="eyebrow" data-i18n="timelineEyebrow">YOUR FLIGHT PLAN</p><h3 data-i18n="timelineTitle">Your mission journey</h3></div><span id="missionSummary"></span></div>
+        <ol class="missionTimeline" id="missionGrid" aria-label="Your mission journey"></ol>
+
         <div class="sectionTitle"><h3 data-i18n="leaderboard">Leaderboard</h3><span data-i18n="liveRanking">Live ranking</span></div>
         <ol class="leaderboard" id="leaderboard"></ol>
-
-        <div class="sectionTitle"><h3 data-i18n="missionsLabel">Missions</h3><span id="missionSummary"></span></div>
-        <div class="missionGrid" id="missionGrid"></div>
 
         <div class="sectionTitle"><h3 data-i18n="teamPhotos">Team photos</h3><span id="photoCount"></span></div>
         <div class="gallery" id="gallery"></div>

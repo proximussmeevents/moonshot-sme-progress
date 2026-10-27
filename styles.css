@@ -10,6 +10,7 @@
 }
 
 * { box-sizing: border-box; }
+[hidden] { display: none !important; }
 html { color-scheme: dark; scroll-behavior: smooth; }
 body {
   margin: 0;
@@ -67,6 +68,8 @@ button:disabled { cursor: wait; opacity: .56; }
 .error { grid-column: 1 / -1; margin: 0; color: #ff9bad; font-weight: 800; }
 .srOnly { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; }
 .dashboard { padding-top: 42px; }
+.directTeamPage .shell { padding-top: 22px; }
+.directTeamPage .dashboard { padding-top: 64px; }
 .dashHead { display: flex; align-items: flex-end; justify-content: space-between; gap: 18px; margin-bottom: 18px; }
 .dashHead h2 { margin: 0; font-size: clamp(2rem, 6vw, 3.2rem); }
 .dashHead > span { color: var(--muted); font-size: .8rem; }
@@ -96,20 +99,43 @@ button:disabled { cursor: wait; opacity: .56; }
 .leaderboardName { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .leaderboardMissions { color: var(--muted); font-size: .78rem; }
 .leaderboardScore { color: var(--gold); text-align: right; font-size: 1.12rem; }
-.missionGrid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
-.mission { min-height: 150px; padding: 16px; border-radius: 20px; display: flex; flex-direction: column; justify-content: space-between; }
-.mission.pending { opacity: .48; box-shadow: none; }
-.mission small { color: var(--cyan); font-weight: 950; letter-spacing: .1em; }
-.mission h4 { margin: 12px 0; font-size: 1rem; }
-.mission div { color: var(--gold); font-weight: 900; }
-.mission.pending div { color: var(--muted); font-size: .82rem; }
+.timelineTitle { align-items: end; margin-bottom: 8px; }
+.timelineTitle .eyebrow { margin-bottom: 7px; }
+.timelineTitle h3 { font-size: clamp(1.75rem, 4vw, 2.45rem); letter-spacing: -.035em; }
+.missionTimeline { --timeline-progress: 0%; position: relative; display: grid; gap: 0; margin: 0; padding: 18px 0 10px; list-style: none; }
+.missionTimeline::before, .missionTimeline::after { content: ''; position: absolute; z-index: 0; top: 42px; left: 50%; width: 4px; height: calc(100% - 84px); border-radius: 99px; transform: translateX(-50%); }
+.missionTimeline::before { background: rgba(255,255,255,.12); box-shadow: 0 0 28px rgba(90,222,255,.1); }
+.missionTimeline::after { height: var(--timeline-progress); max-height: calc(100% - 84px); background: linear-gradient(var(--gold), var(--violet), var(--cyan)); box-shadow: 0 0 18px rgba(90,222,255,.45); }
+.missionStep { position: relative; z-index: 1; display: grid; grid-template-columns: minmax(0, 1fr) 82px minmax(0, 1fr); align-items: center; min-height: 178px; }
+.missionStep:nth-child(odd) .mission { grid-column: 1; }
+.missionStep:nth-child(even) .mission { grid-column: 3; }
+.timelineNode { position: relative; grid-column: 2; grid-row: 1; place-self: center; display: grid; place-items: center; width: 52px; height: 52px; border: 3px solid rgba(90,222,255,.55); border-radius: 50%; color: white; background: radial-gradient(circle at 35% 28%, #fff 0 3%, #966dff 16%, #30205c 48%, #090519 75%); box-shadow: 0 0 0 8px rgba(90,222,255,.06), 0 0 28px rgba(90,222,255,.28); font-size: 1rem; font-weight: 950; }
+.timelineNode::after { content: ''; position: absolute; top: -7px; right: 0; width: 8px; height: 8px; border-radius: 50%; background: var(--gold); box-shadow: 0 0 12px var(--gold); }
+.missionStep.completed .timelineNode { border-color: var(--gold); background: radial-gradient(circle at 35% 28%, #fff 0 3%, #ffd166 18%, #805322 52%, #140b17 77%); box-shadow: 0 0 0 8px rgba(255,209,102,.08), 0 0 30px rgba(255,209,102,.3); }
+.missionStep.next .timelineNode { animation: orbitPulse 2.2s ease-in-out infinite; }
+.mission { min-height: 146px; padding: 18px; border-radius: 22px; display: flex; flex-direction: column; justify-content: space-between; }
+.mission.pending { box-shadow: none; }
+.mission.next { border-color: rgba(90,222,255,.72); background: linear-gradient(145deg, rgba(90,222,255,.13), rgba(140,91,255,.13)); box-shadow: 0 18px 58px rgba(30,137,191,.16), inset 0 0 0 1px rgba(90,222,255,.12); }
+.missionHeader { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.roundBadge { color: var(--cyan); font-size: .75rem; font-weight: 950; letter-spacing: .12em; }
+.timeBadge { color: white; font-size: .92rem; letter-spacing: .01em; }
+.mission h4 { margin: 15px 0 5px; font-size: 1.22rem; line-height: 1.2; }
+.missionMeta { margin: 0 0 16px; color: var(--muted); font-size: .86rem; line-height: 1.45; }
+.missionStatus { align-self: flex-start; padding: 7px 10px; border-radius: 99px; color: var(--gold); background: rgba(255,209,102,.09); font-size: .8rem; font-weight: 900; }
+.mission.next .missionStatus { color: #08121a; background: var(--cyan); }
+.mission.pending .missionStatus { color: var(--muted); background: rgba(255,255,255,.07); }
 .gallery { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
 .photo { position: relative; aspect-ratio: 4/3; overflow: hidden; border-radius: 20px; display: grid; place-items: center; color: white; background: radial-gradient(circle at 30% 30%, rgba(255,255,255,.2), transparent 24%), linear-gradient(145deg, #3c1e70, #0d3452); }
 .photo img { width: 100%; height: 100%; object-fit: cover; transition: transform .25s ease; }
 .photo:hover img { transform: scale(1.03); }
 .photo strong { position: absolute; inset: auto 0 0; padding: 28px 14px 12px; background: linear-gradient(transparent, rgba(0,0,0,.76)); }
 .emptyState { grid-column: 1 / -1; margin: 0; padding: 28px; border: 1px dashed var(--line); border-radius: 20px; color: var(--muted); text-align: center; }
-@media (max-width: 820px) { .missionGrid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 820px) {
+  .missionTimeline::before, .missionTimeline::after { left: 31px; }
+  .missionStep { grid-template-columns: 64px minmax(0, 1fr); min-height: 172px; }
+  .missionStep:nth-child(odd) .mission, .missionStep:nth-child(even) .mission { grid-column: 2; }
+  .timelineNode { grid-column: 1; }
+}
 @media (max-width: 640px) {
   .shell { padding: 16px 14px 56px; }
   .topActions { gap: 8px; }
@@ -121,26 +147,70 @@ button:disabled { cursor: wait; opacity: .56; }
   .loginCard > button { width: 100%; min-height: 54px; }
   .langSwitch button { width: auto; min-height: 34px; padding: 0 8px; }
   .dashHead { align-items: start; flex-direction: column; }
+  .directTeamPage .dashboard { padding-top: 44px; }
   .dashActions { width: 100%; align-items: stretch; flex-direction: row; justify-content: space-between; }
   .refreshButton { width: auto; }
   .stats { grid-template-columns: 1fr 1fr; }
   .stat { min-height: 132px; padding: 16px; }
   .heroStat { grid-column: 1 / -1; }
-  .missionGrid, .gallery { grid-template-columns: 1fr; }
-  .mission { min-height: 126px; }
+  .sectionTitle.timelineTitle { align-items: start; }
+  .timelineTitle { flex-direction: column; }
+  .missionTimeline { padding-top: 10px; }
+  .missionTimeline::before, .missionTimeline::after { top: 34px; left: 25px; height: calc(100% - 68px); }
+  .missionTimeline::after { max-height: calc(100% - 68px); }
+  .missionStep { grid-template-columns: 52px minmax(0, 1fr); min-height: 164px; }
+  .timelineNode { width: 42px; height: 42px; font-size: .9rem; }
+  .mission { min-height: 142px; padding: 16px; }
+  .mission h4 { font-size: 1.08rem; }
+  .gallery { grid-template-columns: 1fr; }
   .photo { aspect-ratio: 16/11; }
   .leaderboardRow { grid-template-columns: 40px minmax(0, 1fr) auto; gap: 8px; padding: 8px; }
   .leaderboardMissions { grid-column: 2 / 3; }
   .leaderboardScore { grid-column: 3; grid-row: 1 / 3; }
 }
 @keyframes spin { to { transform: rotate(360deg); } }
+@keyframes orbitPulse { 50% { transform: scale(1.08); box-shadow: 0 0 0 12px rgba(90,222,255,.08), 0 0 38px rgba(90,222,255,.48); } }
 @media (prefers-reduced-motion: reduce) { * { scroll-behavior: auto !important; transition: none !important; } }
 
 .brandLink { color: white; text-decoration: none; }
 .scoreShell { width: min(860px, 100%); }
+.directStandPage .scoreShell { width: min(1160px, 100%); }
 .scoreHero { margin-top: 62px; }
 .scoreEventVisual { width: min(100%, 280px); justify-self: end; }
+.standDashboard { margin-top: 62px; }
+.standHead { display: flex; align-items: end; justify-content: space-between; gap: 24px; padding: 26px; border: 1px solid rgba(90,222,255,.26); border-radius: 28px; background: radial-gradient(circle at 4% 10%, rgba(140,91,255,.34), transparent 42%), rgba(255,255,255,.065); box-shadow: 0 24px 80px rgba(0,0,0,.3); }
+.standHead h1 { margin: 0; font-size: clamp(2.1rem, 6vw, 4.2rem); line-height: .98; letter-spacing: -.055em; }
+.standHead p:last-child { margin: 12px 0 0; color: var(--muted); font-size: 1rem; }
+.standHeadActions { display: flex; align-items: flex-end; flex-direction: column; gap: 14px; }
+.standHeadActions > strong { color: var(--gold); font-size: .9rem; }
+.scoreWorkspace { display: block; margin-top: 22px; }
+.directStandPage .scoreWorkspace { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(340px, .85fr); align-items: start; gap: 20px; }
+.standSchedule { min-width: 0; padding: 22px; border: 1px solid var(--line); border-radius: 24px; background: rgba(7,4,23,.58); box-shadow: 0 18px 60px rgba(0,0,0,.22); }
+.standSectionTitle { display: flex; align-items: end; justify-content: space-between; gap: 18px; margin-bottom: 18px; }
+.standSectionTitle .eyebrow { margin-bottom: 7px; }
+.standSectionTitle h2 { margin: 0; font-size: clamp(1.45rem, 3vw, 2rem); letter-spacing: -.035em; }
+.standSectionTitle > span { max-width: 180px; color: var(--muted); text-align: right; font-size: .78rem; line-height: 1.45; }
+.standTimeline { position: relative; display: grid; gap: 10px; margin: 0; padding: 0; list-style: none; }
+.standTimeline::before { content: ''; position: absolute; top: 28px; bottom: 28px; left: 25px; width: 3px; border-radius: 99px; background: linear-gradient(var(--cyan), rgba(140,91,255,.46), rgba(255,255,255,.1)); }
+.standVisit { position: relative; z-index: 1; }
+.standVisitButton { width: 100%; min-height: 104px; display: grid; grid-template-columns: 50px minmax(0, 1fr) auto; align-items: center; gap: 14px; padding: 13px; border: 1px solid var(--line); color: white; background: rgba(255,255,255,.055); text-align: left; box-shadow: none; }
+.standVisitButton:hover, .standVisit.selected .standVisitButton { border-color: rgba(90,222,255,.72); background: linear-gradient(105deg, rgba(90,222,255,.13), rgba(140,91,255,.13)); transform: translateY(-1px); }
+.standVisit.next .standVisitButton { border-color: rgba(90,222,255,.42); }
+.standVisit.completed .standVisitButton { border-color: rgba(255,209,102,.26); }
+.standVisitNode { display: grid; place-items: center; width: 46px; height: 46px; border: 2px solid rgba(90,222,255,.62); border-radius: 50%; color: white; background: radial-gradient(circle at 35% 25%, #fff 0 3%, #8d66ff 17%, #211844 56%, #090519 78%); box-shadow: 0 0 0 6px rgba(90,222,255,.06), 0 0 20px rgba(90,222,255,.26); font-weight: 950; }
+.standVisit.completed .standVisitNode { border-color: var(--gold); background: radial-gradient(circle at 35% 25%, #fff 0 3%, #ffd166 17%, #6d471e 56%, #120918 78%); }
+.standVisitDetails { min-width: 0; display: grid; gap: 5px; }
+.standVisitDetails small { color: var(--cyan); font-size: .74rem; font-weight: 900; letter-spacing: .08em; text-transform: uppercase; }
+.standVisitDetails strong { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 1.04rem; }
+.standVisitStatus { color: var(--muted); font-size: .76rem; }
+.standVisit.completed .standVisitStatus { color: var(--gold); }
+.standVisit.next .standVisitStatus { color: var(--cyan); }
+.standVisitAction { padding: 8px 10px; border-radius: 99px; color: #0b0619; background: var(--cyan); font-size: .76rem; font-weight: 950; white-space: nowrap; }
+.standVisit.completed .standVisitAction { background: var(--gold); }
 .scoreCard { padding: 22px; border: 1px solid var(--line); border-radius: 24px; background: var(--glass); backdrop-filter: blur(18px); box-shadow: 0 18px 60px rgba(0,0,0,.24); }
+.directStandPage .scoreCard { position: sticky; top: 18px; }
+.scoreCard > h2 { margin: 0; font-size: 1.55rem; letter-spacing: -.03em; }
+.scoreCardIntro { margin: 7px 0 18px; color: var(--muted); line-height: 1.5; }
 .scoreCard form { display: grid; gap: 18px; }
 .scoreFields { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
 .scoreFieldset { display: grid; gap: 8px; min-width: 0; margin: 0; padding: 0; border: 0; }
@@ -168,10 +238,24 @@ button:disabled { cursor: wait; opacity: .56; }
 @media (max-width: 640px) {
   .scoreHero { margin-top: 48px; }
   .scoreEventVisual { width: min(76vw, 300px); justify-self: center; }
+  .standDashboard { margin-top: 42px; }
+  .standHead { align-items: start; flex-direction: column; padding: 20px; border-radius: 22px; }
+  .standHeadActions { width: 100%; align-items: stretch; flex-direction: row; justify-content: space-between; }
+  .directStandPage .scoreWorkspace { grid-template-columns: 1fr; }
+  .standSchedule { padding: 16px; border-radius: 20px; }
+  .standSectionTitle { align-items: start; flex-direction: column; }
+  .standSectionTitle > span { max-width: none; text-align: left; }
+  .standVisitButton { grid-template-columns: 44px minmax(0, 1fr); min-height: 118px; gap: 11px; padding: 12px; }
+  .standTimeline::before { left: 22px; }
+  .standVisitNode { width: 42px; height: 42px; }
+  .standVisitAction { grid-column: 2; justify-self: start; }
   .scoreCard { padding: 16px; border-radius: 20px; }
+  .directStandPage .scoreCard { position: static; }
   .scoreFields { grid-template-columns: 1fr; }
   .scoreStars { grid-template-columns: repeat(3, 1fr); }
   .scoreFooter { flex-direction: column; }
 }
-/* Keep directly opened team dashboards focused on team progress. */
-[hidden] { display: none !important; }
+
+.teamRoster { margin: 12px 16px; font-size: .95rem; line-height: 1.6; }
+.teamRoster summary { cursor: pointer; font-weight: 600; }
+.teamRoster ul { padding-left: 1.4rem; }
