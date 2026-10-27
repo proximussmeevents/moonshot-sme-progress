@@ -173,3 +173,5 @@ button:disabled { cursor: wait; opacity: .56; }
   .scoreStars { grid-template-columns: repeat(3, 1fr); }
   .scoreFooter { flex-direction: column; }
 }
+/* Keep directly opened team dashboards focused on team progress. */
+[hidden] { display: none !important; }

@@ -45,6 +45,7 @@ const translatedMissions = {
   fr: ['Alunissage', 'Zéro gravité', 'Relais fusée', 'Habitat martien', 'Signal satellite', 'Code cosmique', 'Marche lunaire', 'Constructeur d’orbite', 'Navigateur stellaire', 'Contrôle de mission', 'Langage extraterrestre', 'Sprint solaire', 'Défense antimétéorite', 'Laboratoire spatial', 'Quête galactique', 'Séquence de lancement', 'Défi du cratère', 'Espace lointain', 'Puzzle astro', 'Ultime frontière']
 };
 
+const directTeamId = new URLSearchParams(window.location.search).get('team');
 const state = { data: null, team: null, lang: initialLanguage(), fetchedAt: null };
 const els = {
   teamSelect: document.querySelector('#teamSelect'), teamCode: document.querySelector('#teamCode'),
@@ -288,16 +289,20 @@ async function loadData(manual = false) {
     const selectedTeamId = state.team ? teamId(state.team) : null;
     state.data = data;
     state.fetchedAt = data.fetchedAt || new Date().toISOString();
-    if (selectedTeamId) state.team = activeTeams().find((team) => teamId(team) === selectedTeamId) || null;
+    const requestedTeamId = selectedTeamId || directTeamId;
+    if (requestedTeamId) state.team = activeTeams().find((team) => teamId(team) === requestedTeamId) || null;
     populateTeams();
     if (state.team) {
       const selectedIndex = activeTeams().findIndex((team) => teamId(team) === teamId(state.team));
       els.teamSelect.value = selectedIndex >= 0 ? String(selectedIndex) : '';
       renderDashboard();
+      els.dashboard.hidden = false;
     } else if (!els.dashboard.hidden) {
       els.dashboard.hidden = true;
     }
     renderUpdatedTime();
+    document.querySelector('.hero').hidden = Boolean(directTeamId && state.team);
+    document.querySelector('.loginCard').hidden = Boolean(directTeamId && state.team);
     els.error.hidden = true;
     els.teamSelect.disabled = false;
     els.open.disabled = false;
