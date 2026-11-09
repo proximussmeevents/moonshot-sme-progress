@@ -527,3 +527,7 @@ scoreEls.form.addEventListener('submit', async (event) => {
 document.querySelectorAll('[data-lang]').forEach((button) => button.addEventListener('click', () => setScoreLanguage(button.dataset.lang)));
 setScoreLanguage(scoreState.lang);
 loadScoreData();
+
+import('./mission-timer.js').then(({ mountMissionTimer }) => {
+  mountMissionTimer(scoreEls.standDashboard);
+});
