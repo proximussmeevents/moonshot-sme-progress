@@ -281,3 +281,55 @@ button:disabled { cursor: wait; opacity: .56; }
   font-variant-numeric: tabular-nums;
   line-height: 1;
 }
+
+.teamFloorplanButton { color: var(--cyan); }
+.teamFloorplan {
+  width: min(700px, calc(100% - 20px));
+  max-height: 90dvh;
+  padding: clamp(12px, 3vw, 22px);
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  background: var(--soft);
+  color: white;
+}
+.teamFloorplan::backdrop { background: rgba(8,4,23,.82); }
+.teamFloorplan header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.teamFloorplan h3 { margin: 0; }
+.teamFloorplanDestination { color: var(--gold); font-weight: 700; }
+.teamFloorplan figure { margin: 12px 0 0; }
+.teamFloorplan figcaption { margin-bottom: 6px; color: var(--muted); }
+.teamFloorplanImage { position: relative; container-type: inline-size; }
+.teamFloorplanImage img { display: block; width: 100%; height: auto; border-radius: 10px; }
+.teamFloorplanCorrection, .teamFloorplanMarker {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  font-weight: 800;
+  line-height: 1;
+}
+.teamFloorplanCorrection {
+  width: 2.7cqw;
+  height: 2.7cqw;
+  font-size: 1.65cqw;
+  background: #081619;
+  color: #ddf2ef;
+}
+.teamFloorplanMarker {
+  width: clamp(19px, 5.4cqw, 42px);
+  aspect-ratio: 1;
+  color: #211703;
+  background: var(--gold);
+  border: 2px solid white;
+  font-size: clamp(11px, 2.6cqw, 18px);
+  box-shadow: 0 0 14px var(--gold);
+  animation: boothGlow 1.8s ease-in-out infinite alternate;
+}
+@keyframes boothGlow { to { box-shadow: 0 0 26px 6px var(--gold); } }
+@media (prefers-reduced-motion: reduce) { .teamFloorplanMarker { animation: none; } }

@@ -442,5 +442,21 @@ setLanguage(state.lang);
 loadData();
 
 import('./mission-timer.js').then(({ mountMissionTimer }) => {
-  mountMissionTimer(els.dashboard.querySelector('.dashHead'));
+  let updateFloorplan;
+  const timer = mountMissionTimer(els.dashboard.querySelector('.dashHead'), (round) => {
+    updateFloorplan?.(round);
+  });
+  import('./team-floorplan.js').then(({ mountTeamFloorplan }) => {
+    updateFloorplan = mountTeamFloorplan(timer, (round) => {
+      if (!state.team || !round) return null;
+      const assignment = assignmentsForTeam(state.team).find((row, index) => assignmentRound(row, index + 1) === round);
+      if (!assignment) return null;
+      const mission = missionForAssignment(assignment);
+      return {
+        booth: number(value(mission, 'Missionnummer')),
+        name: missionName(mission),
+        location: assignmentLocation(assignment, mission)
+      };
+    });
+  });
 });

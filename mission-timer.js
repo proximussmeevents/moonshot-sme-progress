@@ -3,10 +3,10 @@ const rehearsalStart = Date.parse('2026-11-09T13:20:00+01:00');
 const eventDay = Date.parse('2026-11-10T00:00:00+01:00');
 const eventStart = Date.parse('2026-11-10T13:20:00+01:00');
 const minute = 60_000;
-const phases = [{ label: 'start', minutes: 10 }];
+const phases = [{ label: 'start', minutes: 10, destinationRound: 1 }];
 for (let round = 1; round <= 6; round += 1) {
-  phases.push({ label: 'mission', round, minutes: 15 });
-  if (round < 6) phases.push({ label: 'move', minutes: 5 });
+  phases.push({ label: 'mission', round, minutes: 15, destinationRound: round });
+  if (round < 6) phases.push({ label: 'move', minutes: 5, destinationRound: round + 1 });
 }
 
 const copy = {
@@ -17,7 +17,7 @@ const copy = {
 
 export function timerAt(now) {
   const start = now < eventDay ? rehearsalStart : eventStart;
-  if (now < start) return { label: 'waiting', time: null };
+  if (now < start) return { label: 'waiting', time: null, destinationRound: 1 };
   let end = start;
   for (const phase of phases) {
     end += phase.minutes * minute;
@@ -25,13 +25,13 @@ export function timerAt(now) {
       const seconds = Math.ceil((end - now) / 1000);
       const time = [Math.floor(seconds / 60), seconds % 60]
         .map((value) => String(value).padStart(2, '0')).join(':');
-      return { label: phase.label, round: phase.round, time };
+      return { label: phase.label, round: phase.round, destinationRound: phase.destinationRound, time };
     }
   }
   return { label: 'end', time: '00:00' };
 }
 
-export function mountMissionTimer(anchor) {
+export function mountMissionTimer(anchor, onTick) {
   const panel = document.createElement('div');
   panel.className = 'missionTimer';
   panel.innerHTML = `
@@ -53,9 +53,11 @@ export function mountMissionTimer(anchor) {
     if (phase.textContent !== phaseText) phase.textContent = phaseText;
     clock.hidden = state.time === null;
     if (clock.textContent !== (state.time || '')) clock.textContent = state.time || '';
+    onTick?.(state.destinationRound);
   }
 
   render();
   window.setInterval(render, 250);
   document.addEventListener('visibilitychange', render);
+  return panel;
 }
