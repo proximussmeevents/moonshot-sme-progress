@@ -1,5 +1,3 @@
-// Both dates use Belgian winter time. Switch to tomorrow's schedule at midnight.
-const rehearsalStart = Date.parse('2026-11-09T13:20:00+01:00');
 const eventDay = Date.parse('2026-11-10T00:00:00+01:00');
 const eventStart = Date.parse('2026-11-10T13:20:00+01:00');
 const minute = 60_000;
@@ -16,9 +14,8 @@ const copy = {
 };
 
 export function timerAt(now) {
-  const start = now < eventDay ? rehearsalStart : eventStart;
-  if (now < start) return { label: 'waiting', time: null, destinationRound: 1 };
-  let end = start;
+  if (now < eventStart) return { label: 'waiting', time: null, destinationRound: 1 };
+  let end = eventStart;
   for (const phase of phases) {
     end += phase.minutes * minute;
     if (now < end) {
@@ -40,6 +37,7 @@ export function mountMissionTimer(anchor, onTick) {
       <strong class="missionTimerPhase" role="status"></strong>
     </div>
     <span class="missionTimerClock" role="timer"></span>`;
+  const details = panel.firstElementChild;
   const title = panel.querySelector('.missionTimerTitle');
   const phase = panel.querySelector('.missionTimerPhase');
   const clock = panel.querySelector('.missionTimerClock');
@@ -47,7 +45,11 @@ export function mountMissionTimer(anchor, onTick) {
 
   function render() {
     const labels = copy[document.documentElement.lang] || copy.en;
-    const state = timerAt(Date.now());
+    const now = Date.now();
+    const beforeEventDay = now < eventDay;
+    details.hidden = beforeEventDay;
+    panel.hidden = beforeEventDay && !onTick;
+    const state = timerAt(now);
     const phaseText = [labels[state.label], state.round].filter(Boolean).join(' ');
     if (title.textContent !== labels.title) title.textContent = labels.title;
     if (phase.textContent !== phaseText) phase.textContent = phaseText;
