@@ -440,3 +440,7 @@ document.querySelectorAll('[data-lang]').forEach((button) => button.addEventList
 
 setLanguage(state.lang);
 loadData();
+
+import('./mission-timer.js').then(({ mountMissionTimer }) => {
+  mountMissionTimer(els.dashboard.querySelector('.dashHead'));
+});
