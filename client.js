@@ -441,12 +441,12 @@ document.querySelectorAll('[data-lang]').forEach((button) => button.addEventList
 setLanguage(state.lang);
 loadData();
 
-import('./mission-timer.js').then(({ mountMissionTimer }) => {
+import('./mission-timer.js?v=20261110').then(({ mountMissionTimer }) => {
   let updateFloorplan;
   const timer = mountMissionTimer(els.dashboard.querySelector('.dashHead'), (round) => {
     updateFloorplan?.(round);
   });
-  import('./team-floorplan.js').then(({ mountTeamFloorplan }) => {
+  import('./team-floorplan.js?v=20261110').then(({ mountTeamFloorplan }) => {
     updateFloorplan = mountTeamFloorplan(timer, (round) => {
       if (!state.team || !round) return null;
       const assignment = assignmentsForTeam(state.team).find((row, index) => assignmentRound(row, index + 1) === round);

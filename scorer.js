@@ -528,6 +528,6 @@ document.querySelectorAll('[data-lang]').forEach((button) => button.addEventList
 setScoreLanguage(scoreState.lang);
 loadScoreData();
 
-import('./mission-timer.js').then(({ mountMissionTimer }) => {
+import('./mission-timer.js?v=20261110').then(({ mountMissionTimer }) => {
   mountMissionTimer(scoreEls.standDashboard);
 });
