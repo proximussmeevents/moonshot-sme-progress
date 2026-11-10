@@ -72,21 +72,43 @@ function setPhotos(photos) {
   }
 }
 
+async function fetchPhotos(url, timeout) {
+  const controller = new AbortController();
+  const deadline = setTimeout(() => controller.abort(), timeout);
+  try {
+    const response = await fetch(url, { cache: 'no-store', signal: controller.signal });
+    if (!response.ok) throw new Error('Photo list unavailable');
+    const photos = await response.json();
+    if (!Array.isArray(photos)) throw new Error('Invalid photo list');
+    return photos;
+  } finally {
+    clearTimeout(deadline);
+  }
+}
+
+let lastLiveUpdate = false;
+
 async function scan() {
   if (busy || demo) return;
   busy = true;
   try {
-    const response = await fetch(new URL('/api/photos', liveOrigin), {
-      cache: 'no-store',
-      signal: AbortSignal.timeout(12000),
-    });
-    if (!response.ok) throw new Error('Drive unavailable');
-    const photos = await response.json();
+    const photos = await fetchPhotos(new URL('/api/photos', liveOrigin), 5000);
+    lastLiveUpdate = true;
     if (demo) return;
     message(photos.length ? 'Connected to Google Drive' : 'Connected to Google Drive · waiting for photos');
     setPhotos(photos);
   } catch {
-    if (!demo) message('Google Drive is temporarily unavailable. Retrying automatically.', true);
+    if (demo) return;
+    try {
+      if (!lastLiveUpdate) {
+        const photos = await fetchPhotos('./photos.json', 5000);
+        if (demo) return;
+        setPhotos(photos);
+      }
+      message('Showing the last available photos · retrying live updates.', true);
+    } catch {
+      if (!demo) message('Google Drive is temporarily unavailable. Retrying automatically.', true);
+    }
   } finally {
     busy = false;
   }
@@ -160,6 +182,7 @@ $('demo').onclick = () => {
     setPhotos(sampleSlides());
   } else {
     setPhotos([]);
+    lastLiveUpdate = false;
     message('Connecting to Google Drive…');
     scan();
   }
