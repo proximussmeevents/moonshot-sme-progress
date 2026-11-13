@@ -52,7 +52,7 @@ const copy = {
 const detailQuestions = {
   plenary: [
     ['herbert', 'Hoe beoordeel je de inleiding van Herbert Wijckmans?', 'Comment évalues-tu l’introduction de Herbert Wijckmans ?', 'How would you rate Herbert Wijckmans’s introduction?'],
-    ['cmi', 'Hoe beoordeel je de CMI-presentatie van Laurent Lemet?', 'Comment évalues-tu la présentation CMI de Laurent Lemet ?', 'How would you rate Laurent Lemet’s CMI presentation?'],
+    ['cmi', 'Hoe beoordeel je de CMI-presentatie van Laurent Lemay?', 'Comment évalues-tu la présentation CMI de Laurent Lemay ?', 'How would you rate Laurent Lemay’s CMI presentation?'],
     ['stijn', 'Hoe beoordeel je de Moonshot-presentatie van Stijn Ilsen?', 'Comment évalues-tu la présentation Moonshot de Stijn Ilsen ?', 'How would you rate Stijn Ilsen’s Moonshot presentation?'],
     ['awards', 'Hoe beoordeel je de Moonshot Awards?', 'Comment évalues-tu les Moonshot Awards ?', 'How would you rate the Moonshot Awards?'],
   ],
